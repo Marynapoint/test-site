@@ -1,0 +1,47 @@
+$(function(){
+
+    // ヘッダーメニュー：リサイズ時表示
+    var timer = false;
+    $(window).resize(function() {
+        if (timer !== false) {
+            clearTimeout(timer);
+        }
+        timer = setTimeout(function(){
+            if (window.innerWidth >= 768) {
+                $('.headernav__menu').css('display', 'flex');
+                $('.headernav__menu-item').css('display', 'inline');
+                $('.headernav__menu').css('position', '');
+            } else {
+                $('.headernav__menu-item').css('display', '');
+                $('.headernav__menu').css('position', 'absolute');
+                if ($('.headernav__menu').hasClass('is-active')) {
+                    $('.headernav__menu').css('display', 'block');
+                } else {
+                    $('.headernav__menu-item').css('display', 'none');
+                }
+            }
+        }, 1);
+    });
+
+    // モバイルヘッダーメニュー表示・非表示
+    $('.headernav__menuSP').on('click', function(event){
+        event.preventDefault();
+
+        if ($('.headernav__menu').hasClass('is-active')) {
+            $('.headernav__menu-item').slideUp();
+            $('.headernav__menu').removeClass('is-active');
+            $('.headernav__menuSP span').removeClass('is-open');
+
+        } else {
+
+            $('.headernav__menuSP span').addClass('is-open');
+            $('.headernav__menu').css('position', 'absolute');
+
+            $('.headernav__menu-item').hide();
+            $('.headernav__menu').show().slideDown();
+            $('.headernav__menu').addClass('is-active');
+            $('.headernav__menu').css('display', 'block');
+            $('.headernav__menu-item').slideDown();
+        }
+    });
+});
